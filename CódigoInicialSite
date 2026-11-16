@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be Healthy — Informação que cuida de você</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ========== PALETA DA MARCA ========== */
+  :root {
+    --verde-petroleo: #0F5C5C;
+    --verde-agua: #21927E;
+    --verde: #6BBF59;
+    --verde-claro: #A8DB8C;
+    --verde-nevoa: #E6F4EA;
+    --fundo: #F7FAF7;
+    --branco: #FFFFFF;
+    --texto: #16403F;
+    --texto-suave: #4E6B69;
+    --borda: #DCEBDF;
+    --sombra: 0 6px 24px rgba(15, 92, 92, 0.08);
+    --raio: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body {
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  .container { width: min(1140px, 92%); margin: 0 auto; }
+  section { padding: 72px 0; }
+
+  .rotulo {
+    font-size: .8rem; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--verde-agua);
+  }
+  .titulo-secao {
+    font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 600;
+    color: var(--verde-petroleo); margin: 6px 0 10px; line-height: 1.25;
+  }
+  .subtitulo-secao { color: var(--texto-suave); max-width: 620px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; font-weight: 500; font-size: .95rem;
+    padding: 12px 24px; border-radius: 10px; border: none; cursor: pointer;
+    background: var(--verde-agua); color: var(--branco);
+    transition: background .2s, transform .15s;
+  }
+  .btn:hover { background: var(--verde-petroleo); transform: translateY(-1px); }
+  .btn:focus-visible, a:focus-visible, input:focus-visible, button:focus-visible {
+    outline: 3px solid var(--verde-claro); outline-offset: 2px;
+  }
+
+  /* ========== CABEÇALHO ========== */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255, 255, 255, .94); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--borda);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo svg { width: 46px; height: 46px; }
+  .logo-texto { line-height: 1.02; font-weight: 600; font-size: 1.15rem; }
+  .logo-texto .be { color: var(--verde-petroleo); display: block; }
+  .logo-texto .healthy { color: var(--verde); display: block; }
+
+  .menu { display: flex; align-items: center; gap: 30px; }
+  .menu a.link {
+    font-size: .92rem; color: var(--texto); padding: 6px 0;
+    border-bottom: 2px solid transparent; transition: color .2s, border-color .2s;
+  }
+  .menu a.link:hover, .menu a.link.ativo { color: var(--verde-agua); border-color: var(--verde); }
+  .menu-botao {
+    display: none; background: none; border: none; cursor: pointer; padding: 8px;
+  }
+  .menu-botao span {
+    display: block; width: 24px; height: 2.5px; border-radius: 2px;
+    background: var(--verde-agua); margin: 5px 0;
+  }
+
+  /* ========== HERO ========== */
+  .hero { padding: 64px 0 110px; background: linear-gradient(180deg, var(--branco) 0%, var(--fundo) 100%); }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; }
+  .hero h1 {
+    font-size: clamp(2.1rem, 4.6vw, 3.3rem); font-weight: 600;
+    line-height: 1.15; color: var(--verde-petroleo);
+  }
+  .hero h1 span { color: var(--verde); display: block; }
+  .hero p { margin: 20px 0 28px; color: var(--texto-suave); max-width: 480px; font-size: 1.02rem; }
+  .busca { display: flex; gap: 10px; max-width: 480px; }
+  .busca input {
+    flex: 1; min-width: 0; font-family: inherit; font-size: .95rem;
+    padding: 13px 16px; border-radius: 10px;
+    border: 1px solid var(--borda); background: var(--branco); color: var(--texto);
+    box-shadow: var(--sombra);
+  }
+  .busca input::placeholder { color: #8FA5A2; }
+  .hero-arte svg { width: 100%; height: auto; display: block; }
+
+  /* ========== CARTÕES DE ATALHO ========== */
+  .atalhos { padding: 0; margin-top: -64px; position: relative; z-index: 2; }
+  .atalhos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .cartao {
+    background: var(--branco); border-radius: var(--raio); padding: 24px 22px;
+    box-shadow: var(--sombra); border: 1px solid var(--borda);
+    transition: transform .2s, border-color .2s; display: block;
+  }
+  .cartao:hover { transform: translateY(-4px); border-color: var(--verde-claro); }
+  .cartao-topo { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .cartao-topo svg { width: 34px; height: 34px; flex-shrink: 0; }
+  .cartao h3 { font-size: 1rem; font-weight: 600; color: var(--verde-petroleo); line-height: 1.3; }
+  .cartao p { font-size: .87rem; color: var(--texto-suave); }
+
+  /* ========== POSTOS ========== */
+  .postos-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+  .filtro { width: min(360px, 100%); }
+  .filtro input {
+    width: 100%; font-family: inherit; font-size: .93rem; padding: 12px 16px;
+    border-radius: 10px; border: 1px solid var(--borda); background: var(--branco); color: var(--texto);
+  }
+  .postos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .posto {
+    background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio);
+    padding: 22px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .posto h3 { font-size: 1.02rem; color: var(--verde-petroleo); font-weight: 600; }
+  .posto .bairro {
+    align-self: flex-start; font-size: .74rem; font-weight: 500;
+    background: var(--verde-nevoa); color: var(--verde-agua);
+    padding: 3px 12px; border-radius: 99px;
+  }
+  .posto li { display: flex; gap: 8px; font-size: .87rem; color: var(--texto-suave); align-items: flex-start; }
+  .posto li svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 3px; }
+  .posto .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
+  .posto .tags span {
+    font-size: .72rem; border: 1px solid var(--borda); border-radius: 6px;
+    padding: 2px 8px; color: var(--texto-suave);
+  }
+  .sem-resultado {
+    display: none; text-align: center; padding: 40px 20px; color: var(--texto-suave);
+    background: var(--branco); border: 1px dashed var(--verde-claro); border-radius: var(--raio);
+  }
+  .aviso { margin-top: 18px; font-size: .8rem; color: var(--texto-suave); }
+
+  /* ========== SERVIÇOS ========== */
+  .servicos { background: var(--branco); }
+  .servicos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 20px; margin-top: 36px; }
+  .servico { text-align: center; }
+  .servico .icone {
+    width: 76px; height: 76px; margin: 0 auto 12px; border-radius: 20px;
+    background: var(--verde-nevoa); display: grid; place-items: center;
+  }
+  .servico .icone svg { width: 38px; height: 38px; }
+  .servico h3 { font-size: .98rem; font-weight: 600; color: var(--verde-petroleo); }
+  .servico p { font-size: .85rem; color: var(--texto-suave); margin-top: 4px; }
+
+  /* ========== INFORMAÇÕES (FAQ) ========== */
+  .info-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+  details {
+    background: var(--branco); border: 1px solid var(--borda); border-radius: 12px;
+    padding: 0 20px; margin-bottom: 12px;
+  }
+  summary {
+    cursor: pointer; padding: 16px 0; font-weight: 500; color: var(--verde-petroleo);
+    list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; font-size: 1.4rem; color: var(--verde); line-height: 1; transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 0 18px; font-size: .9rem; color: var(--texto-suave); }
+
+  /* ========== VALORES ========== */
+  .valores { background: var(--verde-nevoa); padding: 52px 0; }
+  .valores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .valor { display: flex; gap: 14px; align-items: center; }
+  .valor .bolha {
+    width: 58px; height: 58px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center;
+  }
+  .valor .bolha svg { width: 28px; height: 28px; }
+  .valor h3 { font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--verde-agua); }
+  .valor p { font-size: .84rem; color: var(--texto-suave); line-height: 1.45; }
+
+  /* ========== CONTATO ========== */
+  .contato-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; }
+  .contato-lista li { display: flex; gap: 14px; align-items: flex-start; margin-top: 20px; }
+  .contato-lista svg { width: 30px; height: 30px; flex-shrink: 0; }
+  .contato-lista strong { display: block; font-weight: 600; color: var(--verde-petroleo); font-size: .95rem; }
+  .contato-lista span { font-size: .88rem; color: var(--texto-suave); }
+  form {
+    background: var(--branco); border: 1px solid var(--borda); border-radius: var(--raio);
+    padding: 28px; box-shadow: var(--sombra); display: grid; gap: 14px;
+  }
+  label { font-size: .85rem; font-weight: 500; color: var(--verde-petroleo); display: grid; gap: 6px; }
+  form input, form textarea {
+    font-family: inherit; font-size: .93rem; padding: 11px 14px; border-radius: 10px;
+    border: 1px solid var(--borda); background: var(--fundo); color: var(--texto); resize: vertical;
+  }
+  .form-ok { display: none; font-size: .88rem; color: var(--verde-agua); font-weight: 500; }
+
+  /* ========== RODAPÉ ========== */
+  footer { background: var(--verde-petroleo); color: #D7EBE6; padding: 44px 0 28px; }
+  .rodape { display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; align-items: center; }
+  footer .logo-texto .be { color: var(--branco); }
+  footer .logo-texto .healthy { color: var(--verde-claro); }
+  .lema { font-size: .72rem; letter-spacing: .3em; color: var(--verde-claro); margin-top: 10px; }
+  .rodape-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: .88rem; }
+  .rodape-links a:hover { color: var(--verde-claro); }
+  .creditos { margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.14); font-size: .78rem; color: #A9CFC7; }
+
+  /* ========== RESPONSIVO ========== */
+  @media (max-width: 960px) {
+    .hero-grid, .info-grid, .contato-grid { grid-template-columns: 1fr; }
+    .hero-arte { order: -1; max-width: 520px; margin: 0 auto; }
+    .atalhos-grid, .valores-grid, .servicos-grid, .postos-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    section { padding: 56px 0; }
+    .menu-botao { display: block; }
+    .menu {
+      position: absolute; top: 72px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; gap: 0;
+      background: var(--branco); border-bottom: 1px solid var(--borda);
+      padding: 8px 4% 18px; display: none;
+    }
+    .menu.aberto { display: flex; }
+    .menu a.link { padding: 12px 0; border-bottom: 1px solid var(--verde-nevoa); }
+    .menu .btn { margin-top: 14px; }
+    .hero { padding: 36px 0 96px; }
+    .busca { flex-direction: column; }
+    .atalhos-grid, .valores-grid, .postos-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Símbolo da marca (reutilizado no cabeçalho e no rodapé) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="marca" viewBox="0 0 100 100">
+      <!-- arco de pontos -->
+      <g fill="#6BBF59">
+        <circle cx="14" cy="62" r="2.6"/><circle cx="11" cy="48" r="2"/>
+        <circle cx="86" cy="62" r="2.6" fill="#21927E"/><circle cx="89" cy="48" r="2" fill="#21927E"/>
+        <circle cx="80" cy="24" r="1.8" fill="#21927E"/><circle cx="20" cy="24" r="1.8" fill="#21927E"/>
+      </g>
+      <!-- folhinhas laterais -->
+      <path d="M17 40c-3-6-1-11 3-14 3 5 2 10-3 14z" fill="#6BBF59"/>
+      <path d="M83 40c3-6 1-11-3-14-3 5-2 10 3 14z" fill="#21927E"/>
+      <!-- folha principal -->
+      <path d="M52 52C50 32 60 16 80 10c2 20-6 36-28 42z" fill="#6BBF59"/>
+      <path d="M54 50C60 36 68 24 78 13" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <!-- figura humana -->
+      <circle cx="40" cy="26" r="6" fill="#6BBF59"/>
+      <path d="M22 30c8 8 16 12 24 22-2 12-2 22 2 34 6-14 6-26 2-38-4-10-16-16-28-18z" fill="#21927E"/>
+      <path d="M48 56c8 6 12 16 6 30 8-10 8-22-6-30z" fill="#0F5C5C"/>
+      <!-- base -->
+      <path d="M22 76c10-8 20-10 28-8" stroke="#6BBF59" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M56 68c10-2 18 2 24 8" stroke="#6BBF59" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ================= CABEÇALHO ================= -->
+<header>
+  <div class="container nav">
+    <a href="#inicio" class="logo" aria-label="Be Healthy — início">
+      <svg><use href="#marca"/></svg>
+      <span class="logo-texto"><span class="be">be</span><span class="healthy">healthy</span></span>
+    </a>
+    <button class="menu-botao" id="menuBotao" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu" id="menu">
+      <a class="link ativo" href="#inicio">Início</a>
+      <a class="link" href="#postos">Postos de Saúde</a>
+      <a class="link" href="#servicos">Serviços</a>
+      <a class="link" href="#informacoes">Informações</a>
+      <a class="link" href="#contato">Contato</a>
+      <a class="btn" href="#postos">Buscar posto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div>
+      <h1>Informação que <span>cuida de você.</span></h1>
+      <p>Encontre os postos de saúde em Viçosa, horários de atendimento, serviços e tudo o que você precisa para cuidar da sua saúde.</p>
+      <form class="busca" id="buscaHero" style="background:none;border:none;padding:0;box-shadow:none;display:flex">
+        <input type="search" id="buscaHeroCampo" placeholder="Digite o nome do posto ou bairro" aria-label="Buscar posto ou bairro">
+        <button class="btn" type="submit">Buscar</button>
+      </form>
+    </div>
+
+    <div class="hero-arte" aria-hidden="true">
+      <svg viewBox="0 0 520 380" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="260" cy="200" rx="240" ry="160" fill="#E6F4EA"/>
+        <g fill="#fff" opacity=".9">
+          <ellipse cx="90" cy="80" rx="34" ry="12"/><ellipse cx="112" cy="70" rx="22" ry="12"/>
+          <ellipse cx="430" cy="60" rx="30" ry="10"/><ellipse cx="412" cy="52" rx="18" ry="10"/>
+        </g>
+        <!-- prédios ao fundo -->
+        <g fill="#CFE8D6">
+          <rect x="60" y="150" width="46" height="150"/><rect x="420" y="130" width="54" height="170"/>
+          <rect x="112" y="190" width="34" height="110"/>
+        </g>
+        <!-- posto de saúde -->
+        <rect x="150" y="120" width="230" height="190" rx="6" fill="#fff"/>
+        <rect x="150" y="120" width="230" height="26" rx="6" fill="#21927E"/>
+        <rect x="236" y="76" width="58" height="58" rx="8" fill="#fff" stroke="#DCEBDF" stroke-width="2"/>
+        <path d="M258 90h14v10h10v14h-10v10h-14v-10h-10v-14h10z" fill="#6BBF59"/>
+        <g fill="#BFE3DA">
+          <rect x="170" y="166" width="34" height="40" rx="3"/><rect x="216" y="166" width="34" height="40" rx="3"/>
+          <rect x="280" y="166" width="34" height="40" rx="3"/><rect x="326" y="166" width="34" height="40" rx="3"/>
+          <rect x="170" y="224" width="34" height="40" rx="3"/><rect x="326" y="224" width="34" height="40" rx="3"/>
+        </g>
+        <rect x="238" y="232" width="54" height="78" rx="4" fill="#0F5C5C"/>
+        <rect x="264" y="232" width="2" height="78" fill="#21927E"/>
+        <!-- árvores -->
+        <rect x="96" y="250" width="8" height="60" fill="#0F5C5C"/>
+        <ellipse cx="100" cy="226" rx="30" ry="42" fill="#6BBF59"/>
+        <rect x="424" y="262" width="8" height="48" fill="#0F5C5C"/>
+        <ellipse cx="428" cy="238" rx="26" ry="36" fill="#A8DB8C"/>
+        <!-- chão -->
+        <path d="M20 318c80-26 160-26 240-10s170 12 240-12v64H20z" fill="#A8DB8C"/>
+        <path d="M20 340c90-20 170-12 250 0s160 6 230-14v54H20z" fill="#6BBF59" opacity=".55"/>
+        <!-- alfinete de localização -->
+        <path d="M410 150c-20 0-34 15-34 33 0 24 34 58 34 58s34-34 34-58c0-18-14-33-34-33z" fill="#0F5C5C"/>
+        <circle cx="410" cy="184" r="13" fill="#fff"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ATALHOS ================= -->
+<section class="atalhos" aria-label="Atalhos">
+  <div class="container atalhos-grid">
+    <a class="cartao" href="#postos">
+      <div class="cartao-topo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z" fill="#21927E"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>
+        <h3>Postos de Saúde</h3>
+      </div>
+      <p>Encontre o posto mais próximo de você</p>
+    </a>
+    <a class="cartao" href="#postos">
+      <div class="cartao-topo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h4"/></svg>
+        <h3>Horários de Atendimento</h3>
+      </div>
+      <p>Confira os horários de funcionamento</p>
+    </a>
+    <a class="cartao" href="#servicos">
+      <div class="cartao-topo">
+        <svg viewBox="0 0 24 24" fill="#21927E"><circle cx="12" cy="4.5" r="2.5"/><path d="M3 7c4 1 6 3 7.5 6v8h3v-8C15 10 17 8 21 7l-.6-2C16 6 13.5 8 12 10.500 10.500 8 8 6 3.600 5z"/></svg>
+        <h3>Serviços</h3>
+      </div>
+      <p>Conheça os serviços disponíveis</p>
+    </a>
+    <a class="cartao" href="#informacoes">
+      <div class="cartao-topo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.500" r=".6" fill="#21927E"/></svg>
+        <h3>Informações</h3>
+      </div>
+      <p>Documentos, consultas e muito mais</p>
+    </a>
+  </div>
+</section>
+
+<!-- ================= POSTOS DE SAÚDE ================= -->
+<section id="postos">
+  <div class="container">
+    <div class="postos-topo">
+      <div>
+        <span class="rotulo">Postos de Saúde</span>
+        <h2 class="titulo-secao">Encontre o posto certo</h2>
+        <p class="subtitulo-secao">Busque pelo nome da unidade ou pelo bairro para ver endereço, horário e serviços.</p>
+      </div>
+      <div class="filtro">
+        <input type="search" id="filtroPostos" placeholder="Digite o nome do posto ou bairro" aria-label="Filtrar postos">
+      </div>
+    </div>
+
+    <div class="postos-grid" id="listaPostos"></div>
+    <div class="sem-resultado" id="semResultado">Nenhum posto encontrado para essa busca. Tente outro nome ou bairro.</div>
+    <p class="aviso">* Dados de exemplo para demonstração. Substitua pelas informações oficiais da Secretaria Municipal de Saúde.</p>
+  </div>
+</section>
+
+<!-- ================= SERVIÇOS ================= -->
+<section class="servicos" id="servicos">
+  <div class="container">
+    <span class="rotulo">Serviços</span>
+    <h2 class="titulo-secao">O que você encontra nos postos</h2>
+    <p class="subtitulo-secao">Conheça os principais atendimentos oferecidos pela rede pública de saúde.</p>
+
+    <div class="servicos-grid">
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><path d="M10 13v3a4 4 0 0 0 8 0v-2"/><circle cx="18" cy="12" r="2"/></svg></div>
+        <h3>Consultas médicas</h3><p>Clínica geral e acompanhamento</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2l4 4M20 4l-9 9-3 1 1-3 9-9M8 14l-5 5M13 7l4 4"/></svg></div>
+        <h3>Vacinação</h3><p>Calendário para todas as idades</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M9 15l2 2 4-4"/></svg></div>
+        <h3>Agendamentos</h3><p>Marcação de consultas e exames</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.500-7-10a4 4 0 0 1 7-2.500A4 4 0 0 1 19 11c0 5.500-7 10-7 10z"/></svg></div>
+        <h3>Saúde da família</h3><p>Cuidado contínuo e preventivo</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c-2 0-3 2-3 4 0 3 1 5 2 9 .4 2 1 5 2 5s1-5 4-5 3 5 4 5 1.600-3 2-5c1-4 2-6 2-9 0-2-1-4-3-4s-3 1-5 1-3-1-5-1z"/></svg></div>
+        <h3>Odontologia</h3><p>Atendimento odontológico básico</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)"/><path d="M8.500 8.500l7 7"/></svg></div>
+        <h3>Farmácia</h3><p>Retirada de medicamentos</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M7.500 15h9"/></svg></div>
+        <h3>Exames</h3><p>Coleta e encaminhamentos</p>
+      </div>
+      <div class="servico">
+        <div class="icone"><svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div>
+        <h3>Enfermagem</h3><p>Curativos, pressão e glicemia</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INFORMAÇÕES ================= -->
+<section id="informacoes">
+  <div class="container info-grid">
+    <div>
+      <span class="rotulo">Informações</span>
+      <h2 class="titulo-secao">Tire suas dúvidas antes de sair de casa</h2>
+      <p class="subtitulo-secao">Informações claras e organizadas para que você chegue ao posto com tudo o que precisa.</p>
+    </div>
+    <div>
+      <details open>
+        <summary>Quais documentos devo levar?</summary>
+        <p>Leve um documento oficial com foto, CPF, Cartão Nacional de Saúde (Cartão SUS) e um comprovante de residência atualizado.</p>
+      </details>
+      <details>
+        <summary>Como sei qual é o meu posto de referência?</summary>
+        <p>O posto de referência é definido pelo bairro onde você mora. Use a busca por bairro nesta página para encontrar a unidade que atende a sua região.</p>
+      </details>
+      <details>
+        <summary>Preciso agendar para ser atendido?</summary>
+        <p>Consultas de rotina normalmente são agendadas na própria unidade. Confirme com o posto os dias e horários de marcação antes de ir.</p>
+      </details>
+      <details>
+        <summary>E em caso de urgência?</summary>
+        <p>Os postos atendem casos de rotina e prevenção. Em situações de emergência, ligue para o SAMU (192) ou procure o pronto atendimento mais próximo.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VALORES ================= -->
+<section class="valores" aria-label="Nossos compromissos">
+  <div class="container valores-grid">
+    <div class="valor">
+      <div class="bolha" style="background:#21927E"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="8" r="3"/><circle cx="5.500" cy="10" r="2.200"/><circle cx="18.500" cy="10" r="2.200"/><path d="M6.500 19c0-3 2.500-5 5.500-5s5.500 2 5.500 5zM1.500 18c0-2.200 1.600-3.800 4-3.800.6 0 1.100.1 1.600.3-1 1-1.600 2.200-1.600 3.500zM22.500 18c0-2.200-1.600-3.800-4-3.800-.6 0-1.100.1-1.600.3 1 1 1.600 2.200 1.600 3.500z"/></svg></div>
+      <div><h3>Acesso fácil</h3><p>Informações claras e organizadas para todos.</p></div>
+    </div>
+    <div class="valor">
+      <div class="bolha" style="background:#3E9B4F"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div><h3>Confiança</h3><p>Informações oficiais e sempre atualizadas.</p></div>
+    </div>
+    <div class="valor">
+      <div class="bolha" style="background:#6BBF59"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 13s-4.500-2.800-4.500-6A2.500 2.500 0 0 1 12 5.500 2.500 2.500 0 0 1 16.500 7c0 3.200-4.500 6-4.500 6z"/><path d="M3 16c3-1.500 5-1 7 .5l3 .5c1.500.2 1.500 2 0 2h-3l5 .8 4.500-2.300c1.300-.6 2.300 1 1.200 1.900L15 22.500 3 20z"/></svg></div>
+      <div><h3>Cuidado</h3><p>Nosso compromisso é com a sua saúde.</p></div>
+    </div>
+    <div class="valor">
+      <div class="bolha" style="background:#A8DB8C"><svg viewBox="0 0 24 24" fill="#0F5C5C"><circle cx="12" cy="8" r="3"/><circle cx="5.500" cy="10" r="2.200"/><circle cx="18.500" cy="10" r="2.200"/><path d="M6.500 19c0-3 2.500-5 5.500-5s5.500 2 5.500 5zM1.500 18c0-2.200 1.600-3.800 4-3.800.6 0 1.100.1 1.600.3-1 1-1.600 2.200-1.600 3.500zM22.500 18c0-2.200-1.600-3.800-4-3.800-.6 0-1.100.1-1.600.3 1 1 1.600 2.200 1.600 3.500z"/></svg></div>
+      <div><h3>Comunidade</h3><p>Juntos por uma Viçosa mais saudável.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTATO ================= -->
+<section id="contato">
+  <div class="container contato-grid">
+    <div>
+      <span class="rotulo">Contato</span>
+      <h2 class="titulo-secao">Fale com a gente</h2>
+      <p class="subtitulo-secao">Encontrou uma informação desatualizada ou tem uma sugestão? Envie uma mensagem.</p>
+      <ul class="contato-lista">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+          <div><strong>Telefone</strong><span>(31) 0000-0000</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <div><strong>E-mail</strong><span>contato@behealthy.exemplo</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="9" r="2.500"/></svg>
+          <div><strong>Localização</strong><span>Viçosa — Minas Gerais</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <form id="formContato">
+      <label>Nome
+        <input type="text" name="nome" required placeholder="Seu nome">
+      </label>
+      <label>E-mail
+        <input type="email" name="email" required placeholder="voce@email.com">
+      </label>
+      <label>Mensagem
+        <textarea name="mensagem" rows="4" required placeholder="Como podemos ajudar?"></textarea>
+      </label>
+      <button class="btn" type="submit">Enviar mensagem</button>
+      <p class="form-ok" id="formOk" role="status">Mensagem registrada. Obrigado pelo contato!</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ================= RODAPÉ ================= -->
+<footer>
+  <div class="container">
+    <div class="rodape">
+      <div>
+        <a href="#inicio" class="logo">
+          <svg><use href="#marca"/></svg>
+          <span class="logo-texto"><span class="be">be</span><span class="healthy">healthy</span></span>
+        </a>
+        <p class="lema">INFORMAÇÃO • ACESSO • CUIDADO</p>
+      </div>
+      <nav class="rodape-links" aria-label="Rodapé">
+        <a href="#postos">Postos de Saúde</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#informacoes">Informações</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+    <p class="creditos">© <span id="ano"></span> Be Healthy — Juntos por uma Viçosa mais saudável.</p>
+  </div>
+</footer>
+
+<script>
+  /* ====== DADOS DOS POSTOS (EXEMPLO — troque pelos dados oficiais) ====== */
+  const postos = [
+    { nome: "UBS Centro",          bairro: "Centro",         endereco: "Rua Exemplo, 100",        horario: "Seg a Sex, 7h às 17h", telefone: "(31) 0000-0001", servicos: ["Consultas", "Vacinação", "Farmácia"] },
+    { nome: "UBS Santo Antônio",   bairro: "Santo Antônio",  endereco: "Av. Exemplo, 250",        horario: "Seg a Sex, 7h às 17h", telefone: "(31) 0000-0002", servicos: ["Consultas", "Odontologia", "Enfermagem"] },
+    { nome: "UBS Nova Viçosa",     bairro: "Nova Viçosa",    endereco: "Rua Modelo, 45",          horario: "Seg a Sex, 7h às 16h", telefone: "(31) 0000-0003", servicos: ["Saúde da família", "Vacinação"] },
+    { nome: "UBS Bom Jesus",       bairro: "Bom Jesus",      endereco: "Rua Demonstração, 78",    horario: "Seg a Sex, 7h às 17h", telefone: "(31) 0000-0004", servicos: ["Consultas", "Exames", "Farmácia"] },
+    { nome: "UBS Silvestre",       bairro: "Silvestre",      endereco: "Av. Ilustrativa, 300",    horario: "Seg a Sex, 7h às 16h", telefone: "(31) 0000-0005", servicos: ["Consultas", "Enfermagem"] },
+    { nome: "UBS Amoras",          bairro: "Amoras",         endereco: "Rua Amostra, 12",         horario: "Seg a Sex, 7h às 17h", telefone: "(31) 0000-0006", servicos: ["Saúde da família", "Odontologia", "Vacinação"] }
+  ];
+
+  const icones = {
+    local: '<svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7-7-12a7 7 0 0 1 14 0c0 5-7 12-7 12z"/><circle cx="12" cy="9" r="2.500"/></svg>',
+    hora:  '<svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h4"/></svg>',
+    fone:  '<svg viewBox="0 0 24 24" fill="none" stroke="#21927E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>'
+  };
+
+  const lista = document.getElementById('listaPostos');
+  const semResultado = document.getElementById('semResultado');
+  const filtro = document.getElementById('filtroPostos');
+
+  // Ignora acentos e maiúsculas na busca ("vicosa" encontra "Viçosa")
+  const normalizar = t => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+  function mostrarPostos(termo = '') {
+    const busca = normalizar(termo);
+    const encontrados = postos.filter(p =>
+      normalizar(p.nome).includes(busca) || normalizar(p.bairro).includes(busca)
+    );
+    lista.innerHTML = encontrados.map(p => `
+      <article class="posto">
+        <span class="bairro">${p.bairro}</span>
+        <h3>${p.nome}</h3>
+        <ul>
+          <li>${icones.local}<span>${p.endereco}</span></li>
+          <li>${icones.hora}<span>${p.horario}</span></li>
+          <li>${icones.fone}<span>${p.telefone}</span></li>
+        </ul>
+        <div class="tags">${p.servicos.map(s => `<span>${s}</span>`).join('')}</div>
+      </article>`).join('');
+    semResultado.style.display = encontrados.length ? 'none' : 'block';
+  }
+
+  filtro.addEventListener('input', e => mostrarPostos(e.target.value));
+
+  // Busca do topo: leva o termo para a seção de postos
+  document.getElementById('buscaHero').addEventListener('submit', e => {
+    e.preventDefault();
+    const termo = document.getElementById('buscaHeroCampo').value;
+    filtro.value = termo;
+    mostrarPostos(termo);
+    document.getElementById('postos').scrollIntoView();
+  });
+
+  // Menu no celular
+  const menu = document.getElementById('menu');
+  const menuBotao = document.getElementById('menuBotao');
+  menuBotao.addEventListener('click', () => {
+    const aberto = menu.classList.toggle('aberto');
+    menuBotao.setAttribute('aria-expanded', aberto);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('aberto');
+    menuBotao.setAttribute('aria-expanded', false);
+  }));
+
+  // Destaca no menu a seção visível
+  const links = document.querySelectorAll('.menu a.link');
+  const observador = new IntersectionObserver(entradas => {
+    entradas.forEach(entrada => {
+      if (entrada.isIntersecting) {
+        links.forEach(l => l.classList.toggle('ativo', l.getAttribute('href') === '#' + entrada.target.id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('main section[id]').forEach(s => observador.observe(s));
+
+  // Formulário de contato (demonstração: não envia para servidor)
+  document.getElementById('formContato').addEventListener('submit', e => {
+    e.preventDefault();
+    e.target.reset();
+    document.getElementById('formOk').style.display = 'block';
+  });
+
+  document.getElementById('ano').textContent = new Date().getFullYear();
+  mostrarPostos();
+</script>
+</body>
+</html>
